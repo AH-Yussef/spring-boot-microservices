@@ -1,16 +1,29 @@
 package com.example.ratingsservice.models;
 
-public class Rating {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.IdClass;
 
+@Entity
+@IdClass(RatingsKey.class)
+@Table(name = "ratings")
+public class Rating {
+    @Id
+    private String userId;
+    @Id
     private String movieId;
     private int rating;
 
-    public Rating() {
-    }
+//
+//    public String getUserId() {
+//        return userId;
+//    }
 
-    public Rating(String movieId, int rating) {
-        this.movieId = movieId;
-        this.rating = rating;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMovieId() {
