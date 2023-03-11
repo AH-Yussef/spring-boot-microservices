@@ -1,5 +1,7 @@
 package com.example.ratingsservice.resources;
 
+import com.example.ratingsservice.models.MovieRating;
+import com.example.ratingsservice.models.MovieRatings;
 import com.example.ratingsservice.models.Rating;
 import com.example.ratingsservice.models.RatingsRepository;
 import com.example.ratingsservice.models.UserRating;
@@ -24,4 +26,11 @@ public class RatingsResource {
         List<Rating> ls = ratingsRepository.findAllRatings(userId);
         return new UserRating(ls);
     }
+
+    @RequestMapping("/top")
+    public MovieRatings getTopRatings() {
+        List<MovieRating> ls = ratingsRepository.findTopRatings();
+        return new MovieRatings(ls);
+    }
 }
+ 
