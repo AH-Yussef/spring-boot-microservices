@@ -1,20 +1,19 @@
 package com.moviecatalogservice.resources;
 
+import com.example.MovieRating;
+import com.google.protobuf.Descriptors;
 import com.moviecatalogservice.models.CatalogItem;
-import com.moviecatalogservice.models.Movie;
 import com.moviecatalogservice.models.Rating;
-import com.moviecatalogservice.models.UserRating;
 import com.moviecatalogservice.services.MovieInfoService;
+import com.moviecatalogservice.services.TopRatingsService;
 import com.moviecatalogservice.services.UserRatingService;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,13 +26,17 @@ public class MovieCatalogResource {
 
     private final UserRatingService userRatingService;
 
+    private final TopRatingsService topRatingsService;
+
     public MovieCatalogResource(RestTemplate restTemplate,
                                 MovieInfoService movieInfoService,
-                                UserRatingService userRatingService) {
+                                UserRatingService userRatingService,
+                                TopRatingsService topRatingsService) {
 
         this.restTemplate = restTemplate;
         this.movieInfoService = movieInfoService;
         this.userRatingService = userRatingService;
+        this.topRatingsService = topRatingsService;
     }
 
     /**
@@ -46,6 +49,12 @@ public class MovieCatalogResource {
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable String userId) {
         List<Rating> ratings = userRatingService.getUserRating(userId).getRatings();
+        return ratings.stream().map(movieInfoService::getCatalogItem).collect(Collectors.toList());
+    }
+
+    @RequestMapping("/top-10-ratings")
+    public List<CatalogItem> getTop10MovieRatings() throws InterruptedException {
+        List<Rating> ratings =  topRatingsService.getTop10MoviesByRating();
         return ratings.stream().map(movieInfoService::getCatalogItem).collect(Collectors.toList());
     }
 }

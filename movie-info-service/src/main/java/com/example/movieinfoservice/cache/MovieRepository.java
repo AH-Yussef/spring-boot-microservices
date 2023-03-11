@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends MongoRepository<Movie, String> {
-    Optional<Movie> findMovieById(String movieId);
-    void cacheMovie(Movie movie);
 }

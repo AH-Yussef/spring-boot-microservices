@@ -4,10 +4,6 @@ option java_multiple_files = true;
 
 package com.example;
 
-service MovieRatingsService {
-    rpc getTop10MoviesByRating (MovieRatingsRequest) returns (MovieRatingsResponse) {}
-}
-
 message MovieRatingsRequest {}
 
 message MovieRating {
@@ -15,6 +11,6 @@ message MovieRating {
     int32 rating = 2;
 }
 
-message MovieRatingsResponse {
-    repeated MovieRating movie_ratings = 1;
+service MovieRatingsService {
+    rpc getTop10MoviesByRating (MovieRatingsRequest) returns (stream MovieRating) {}
 }
