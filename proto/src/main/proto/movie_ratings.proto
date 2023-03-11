@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.example;
+
+service MovieRatingsService {
+    rpc getTop10MoviesByRating (MovieRatingsRequest) returns (MovieRatingsResponse) {}
+}
+
+message MovieRatingsRequest {}
+
+message MovieRating {
+    string movie_id = 1;
+    int32 rating = 2;
+}
+
+message MovieRatingsResponse {
+    repeated MovieRating movie_ratings = 1;
+}
