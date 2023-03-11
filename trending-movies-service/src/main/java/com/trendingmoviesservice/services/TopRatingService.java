@@ -6,7 +6,6 @@ import com.trendingmoviesservice.models.Rating;
 import com.trendingmoviesservice.models.TopRatings;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -31,14 +30,14 @@ public class TopRatingService {
             // Wait/Sleep for 5 seconds before sending another request to the failed service
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000")
     })
-    public TopRatings getTopRating() {
-        String ratingsUrl = "http://ratings-data-service/ratings/" + "11";
+    public TopRatings getTop10Ratings() {
+        String ratingsUrl = "http://ratings-data-service/ratings/top";
         return Objects.requireNonNull(restTemplate.getForObject(ratingsUrl, TopRatings.class));
     }
 
     public TopRatings getFallbackTopRatings() {
         TopRatings userRating = new TopRatings();
-        userRating.setRatings(Collections.singletonList(
+        userRating.setMovieRatings(Collections.singletonList(
                 new Rating("0", 0)));
 
         return userRating;

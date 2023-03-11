@@ -1,10 +1,6 @@
 package com.example.ratingsservice.resources;
 
-import com.example.ratingsservice.models.MovieRating;
-import com.example.ratingsservice.models.MovieRatings;
-import com.example.ratingsservice.models.Rating;
-import com.example.ratingsservice.models.RatingsRepository;
-import com.example.ratingsservice.models.UserRating;
+import com.example.ratingsservice.models.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +25,7 @@ public class RatingsResource {
 
     @RequestMapping("/top")
     public MovieRatings getTopRatings() {
-        List<MovieRating> ls = ratingsRepository.findTopRatings();
+        List<IMovieRating> ls = ratingsRepository.findTopRatings();
         return new MovieRatings(ls);
     }
 }

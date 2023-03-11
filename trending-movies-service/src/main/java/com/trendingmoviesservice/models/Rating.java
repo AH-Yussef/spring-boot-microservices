@@ -3,12 +3,12 @@ package com.trendingmoviesservice.models;
 public class Rating {
 
     private String movieId;
-    private int rating;
+    private Integer rating;
 
     public Rating() {
     }
 
-    public Rating(String movieId, int rating) {
+    public Rating(String movieId, Integer rating) {
         this.movieId = movieId;
         this.rating = rating;
     }
@@ -21,11 +21,11 @@ public class Rating {
         this.movieId = movieId;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 }

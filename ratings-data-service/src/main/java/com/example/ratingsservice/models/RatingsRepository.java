@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 @Repository
-public interface RatingsRepository extends JpaRepository<Rating, Integer> {
+public interface RatingsRepository extends JpaRepository<Rating, RatingsKey> {
     @Query(value = "SELECT r FROM Rating r WHERE r.userId = ?1")
     List<Rating> findAllRatings(String userId);
 
-    @Query(value = "SELECT new com.example.ratingsservice.models.MovieRating(movieId, AVG(rating) as avg_rating)"
-     +" FROM Rating GROUP BY movieId ORDER BY avg_rating DESC LIMIT 10")
-    List<MovieRating> findTopRatings();
-    
+    @Query(value = "SELECT movie_id AS movieId, AVG(rating) AS rating"
+            +" FROM ratings GROUP BY movie_id ORDER BY rating DESC LIMIT 10", nativeQuery = true)
+    List<IMovieRating> findTopRatings();
 }
